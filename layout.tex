@@ -1,0 +1,119 @@
+\documentclass[border=1mm]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{patterns,shapes.geometric,positioning,fit,arrows.meta,calc}
+
+% Define custom colors
+\definecolor{cleanroom}{RGB}{230,240,255}
+\definecolor{storage}{RGB}{255,240,230}
+\definecolor{assembly}{RGB}{230,255,230}
+\definecolor{qc}{RGB}{255,230,230}
+\definecolor{office}{RGB}{240,240,240}
+\definecolor{arrows}{RGB}{100,100,100}
+
+\begin{document}
+\begin{tikzpicture}[
+    scale=1,
+    every node/.style={font=\sffamily\small},
+    area/.style={
+        rectangle,
+        minimum width=30mm,
+        minimum height=20mm,
+        thick,
+        draw=black,
+        fill=#1
+    },
+    equipment/.style={
+        rectangle,
+        minimum width=10mm,
+        minimum height=6mm,
+        draw=black,
+        fill=white,
+        thin
+    },
+    flow/.style={
+        ->,
+        >=latex,
+        thick,
+        arrows,
+        rounded corners
+    },
+    label/.style={
+        font=\footnotesize
+    }
+]
+
+% Main facility outline
+\draw[very thick] (0,0);
+
+% Cleanroom Area
+\node[area=cleanroom, minimum width=60mm, minimum height=40mm] (cleanroom) at (5,15) {Sala Limpa ISO 8};
+\node[equipment] (mold1) at (3,16) {MI-1};
+\node[equipment] (mold2) at (3,14) {MI-2};
+\node[equipment] (mold3) at (7,16) {MI-3};
+\node[label] at (5,17.5) {Moldagem por Injeção};
+
+% Assembly Area
+\node[area=assembly, minimum width=50mm, minimum height=35mm] (assembly) at (15,15) {Área de Montagem};
+\node[equipment] (as1) at (13,16) {AM-1};
+\node[equipment] (as2) at (15,16) {AM-2};
+\node[equipment] (as3) at (17,16) {AM-3};
+\node[label] at (15,17.5) {Linhas de Montagem};
+
+% Testing Area
+\node[area=qc, minimum width=40mm, minimum height=30mm] (testing) at (24,15) {Área de Testes};
+\node[equipment] (test1) at (23,16) {T-1};
+\node[equipment] (test2) at (25,16) {T-2};
+
+% Storage Areas
+\node[area=storage, minimum width=30mm, minimum height=25mm] (raw) at (5,5) {Matéria-Prima};
+\node[area=storage, minimum width=30mm, minimum height=25mm] (finished) at (24,5) {Produto Acabado};
+
+% Quality Control
+\node[area=qc, minimum width=35mm, minimum height=25mm] (qc) at (15,5) {Controle de Qualidade};
+
+% Office Area
+\node[area=office, minimum width=25mm, minimum height=15mm] (office) at (28,2) {Escritórios};
+
+% Flow arrows
+\draw[flow] (raw) -- (cleanroom);
+\draw[flow] (cleanroom) -- (assembly);
+\draw[flow] (assembly) -- (testing);
+\draw[flow] (testing) -- (qc);
+\draw[flow] (qc) -- (finished);
+
+% Legend
+\node[draw, rectangle, fill=white] (legend) at (2,2) {
+    \begin{tabular}{ll}
+        \textbf{Legenda:} & \\
+        MI = Moldadora de Injeção & \\
+        AM = Montagem & \\
+        T = Teste & \\
+    \end{tabular}
+};
+
+% Scale bar
+\draw[|-|] (27,19) -- node[above, font=\footnotesize] {10m} (30,19);
+
+% Compass rose
+\draw[thick] (28,7) circle (0.5);
+\draw[thick,->] (28,7) -- (28,7.8) node[above, font=\footnotesize] {N};
+\draw[thick,->] (28,7) -- (28.8,7) node[right, font=\footnotesize] {L};
+
+% Facility information
+\node[text width=40mm, font=\footnotesize, align=left] at (2,19) {
+    \textbf{Instalação MediPump}\\
+    Área Total: 5000m²\\
+    Classificação: ISO 8
+};
+
+% Equipment details
+\node[label, text width=30mm, align=left] at (27,11) {
+    \textbf{Capacidade:}\\
+    Moldagem: 5 un\\
+    Montagem: 4 lin\\
+    Testes: 8 est\\
+    CQ: 6 est
+};
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,1349 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazilian]{babel}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgf-pie}
+\usepackage{pgfplotstable}
+\usepackage{xcolor}
+\usepackage{listings}
+\usetikzlibrary{positioning,arrows.meta,calc,shapes.geometric,patterns}
+\usepackage{pgfgantt}
+\pgfplotsset{compat=1.18}
+
+\tikzset{
+    every picture/.style={
+        line width=0.5pt,
+        line cap=round,
+        line join=round
+    }
+}
+
+% Cores personalizadas para gráficos
+\definecolor{chart1}{RGB}{70,130,180}
+\definecolor{chart2}{RGB}{95,158,160}
+\definecolor{chart3}{RGB}{72,61,139}
+
+% Configurar margens da página
+\usepackage[margin=2.5cm]{geometry}
+
+\pgfplotsset{compat=1.18}
+
+\title{MediPump Technologies\\Documentação da Instalação de Manufatura}
+\author{Equipe de Documentação Técnica}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Introdução e Visão Geral}
+
+\section{Visão Geral da Instalação}
+\subsection{Especificações da Instalação}
+
+A instalação de manufatura da MediPump Technologies representa uma sala limpa de última geração Classe 100.000 (ISO 8) dedicada à produção de dispositivos médicos de precisão.
+
+% Gráfico de Especificações da Instalação
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    bar width=25pt,
+    ylabel={Área (metros quadrados)},
+    symbolic x coords={Espaço Total, Sala Limpa, Produção, Armazenamento, CQ},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    width=\textwidth,
+    height=8cm,
+    title={Distribuição de Área da Instalação}
+]
+\addplot[fill=chart1] coordinates {
+    (Espaço Total,5000)
+    (Sala Limpa,2000)
+    (Produção,2500)
+    (Armazenamento,1100)
+    (CQ,400)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Distribuição do Espaço da Instalação}
+\label{fig:facility-space}
+\end{figure}
+
+\subsection{Capacidade de Produção}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Metas de Produção Anual},
+    ylabel={Unidades},
+    symbolic x coords={X1,X1 Pro,Mini},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    width=\textwidth,
+    height=8cm,
+    ybar,
+    bar width=25pt,
+]
+\addplot[fill=chart2] coordinates {
+    (X1,25000)
+    (X1 Pro,15000)
+    (Mini,10000)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Metas de Produção Anual por Modelo}
+\label{fig:production-targets}
+\end{figure}
+
+\section{Descrição do Produto}
+\subsection{Especificações da Linha de Produtos}
+
+\begin{table}[H]
+\centering
+\caption{Comparação da Linha de Produtos}
+\label{tab:product-comparison}
+\begin{tabular}{@{}llll@{}}
+\toprule
+Especificação & MediPump X1 & MediPump X1 Pro & MediPump Mini \\
+\midrule
+Dimensões & 8,5×5,3×2,1 cm & 8,0×5,0×1,9 cm & 6,5×4,0×1,8 cm \\
+Peso & 75g & 65g & 45g \\
+Duração da Bateria & 7 dias & 10 dias & 5 dias \\
+Reservatório & 3,0 mL & 3,5 mL & 2,0 mL \\
+Preço Alvo & R\$ 19.000 & R\$ 22.500 & R\$ 16.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Gráfico de Recursos dos Produtos
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+    % Definir os eixos
+    \foreach \angle [count=\xi] in {0, 72, 144, 216, 288}
+        \draw[gray] (0,0) -- (\angle:5);
+    
+    % Grade circular
+    \foreach \r in {1,2,3,4,5}
+    {
+        \draw[gray, thin] (0,0) circle (\r);
+    }
+    
+    % Plotagem para X1
+    \draw[chart1, thick] plot coordinates {
+        (0:3.5)    % Duração da Bateria
+        (72:3.75)  % Eficiência de Tamanho
+        (144:4)    % Recursos
+        (216:4.25) % Desempenho de Preço
+        (288:4.5)  % Interface do Usuário
+    } -- cycle;
+    
+    % Plotagem para X1 Pro
+    \draw[chart2, thick] plot coordinates {
+        (0:5)      % Duração da Bateria
+        (72:4.25)  % Eficiência de Tamanho
+        (144:5)    % Recursos
+        (216:3.75) % Desempenho de Preço
+        (288:4.75) % Interface do Usuário
+    } -- cycle;
+    
+    % Plotagem para Mini
+    \draw[chart3, thick] plot coordinates {
+        (0:2.5)    % Duração da Bateria
+        (72:5)     % Eficiência de Tamanho
+        (144:3)    % Recursos
+        (216:4.5)  % Desempenho de Preço
+        (288:4.25) % Interface do Usuário
+    } -- cycle;
+    
+    % Rótulos
+    \node at (0:5.5) {Duração da Bateria};
+    \node at (72:5.5) {Eficiência de Tamanho};
+    \node at (144:5.5) {Recursos};
+    \node at (216:5.5) {Desempenho de Preço};
+    \node at (288:5.5) {Interface do Usuário};
+    
+    % Legenda
+    \node[right] at (6,2) {\textcolor{chart1}{--- X1}};
+    \node[right] at (6,1) {\textcolor{chart2}{--- X1 Pro}};
+    \node[right] at (6,0) {\textcolor{chart3}{--- Mini}};
+\end{tikzpicture}
+\caption{Comparação de Recursos dos Produtos}
+\label{fig:feature-comparison}
+\end{figure}
+
+\section{Fluxo do Processo de Manufatura}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    auto,
+    block/.style={
+        rectangle,
+        draw=black,
+        thick,
+        fill=white,
+        text width=2.5cm,
+        align=center,
+        rounded corners,
+        minimum height=1cm
+    },
+    line/.style={draw, thick, -latex'},
+]
+   % Primeira linha
+   \node[block] (raw) {Matérias-Primas};
+   \node[block, right=1.5cm of raw] (molding) {Moldagem por Injeção};
+   \node[block, right=1.5cm of molding] (qc1) {CQ de Componentes};
+
+   % Segunda linha
+   \node[block, below=2cm of molding] (assembly) {Montagem};
+   \node[block, right=1.5cm of assembly] (testing) {Testes};
+
+   % Terceira linha
+   \node[block, below=2cm of assembly] (sterilization) {Esterilização};
+   \node[block, right=1.5cm of sterilization] (packaging) {Embalagem};
+   \node[block, right=1.5cm of packaging] (finalqc) {CQ Final};
+
+   % Conectar blocos com setas
+   \path [line] (raw) -- (molding);
+   \path [line] (molding) -- (qc1);
+   \path [line] (qc1) -- (assembly);
+   \path [line] (assembly) -- (testing);
+   \path [line] (testing) -- node[right] {Aprovado} (packaging);
+   \path [line] (testing) -- node[left] {Reprovado} (assembly);
+   \path [line] (packaging) -- (finalqc);
+   
+   % Adicionar etapa de esterilização
+   \path [line] (testing) -- (sterilization);
+   \path [line] (sterilization) -- (packaging);
+
+   % Loops de feedback de qualidade
+   \draw [line] (finalqc) -- ++(1,0) -- ++(0,4) -- ++(-8,0) -- (assembly);
+   
+   % Rótulos para estágios do processo
+   \node[above=0.2cm of raw] {\textbf{Estágio 1}};
+   \node[above=0.2cm of qc1] {\textbf{Estágio 2}};
+   \node[left=0.2cm of assembly] {\textbf{Estágio 3}};
+   \node[left=0.2cm of sterilization] {\textbf{Estágio 4}};
+
+\end{tikzpicture}
+\caption{Fluxo do Processo de Manufatura}
+\label{fig:process-flow}
+\end{figure}
+
+\chapter{Características do Processo}
+
+\section{Características da Instalação}
+\subsection{Requisitos Físicos}
+
+\begin{table}[H]
+\centering
+\caption{Requisitos Físicos da Instalação}
+\label{tab:physical-req}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Requisito & Especificação \\
+\midrule
+Capacidade de Carga do Piso & \SI{1000}{\kilo\gram\per\square\meter} \\
+Altura do Teto & \SI{4,5}{\meter} \\
+Controle de Temperatura & \SI{20}{\celsius} ±\SI{0,5}{\celsius} \\
+Controle de Umidade & 45\% ±5\% UR \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Gráfico de Distribuição de Equipamentos
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Distribuição de Equipamentos por Tipo},
+    ylabel={Número de Unidades},
+    symbolic x coords={Moldagem por Injeção,Montagem,Testes,Embalagem,CQ},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    width=\textwidth,
+    height=8cm,
+    ybar,
+    bar width=25pt,
+]
+\addplot[fill=chart3] coordinates {
+    (Moldagem por Injeção,5)
+    (Montagem,4)
+    (Testes,8)
+    (Embalagem,2)
+    (CQ,6)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Distribuição de Equipamentos}
+\label{fig:equipment-dist}
+\end{figure}
+
+\section{Análise do Processo}
+% Gráfico de Eficiência do Processo
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Métricas de Eficiência do Processo},
+    ylabel={Porcentagem (\%)},
+    symbolic x coords={Balanceamento de Linha,Utilização,Taxa de Qualidade,OEE},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    width=\textwidth,
+    height=8cm,
+    ybar,
+    bar width=25pt,
+]
+\addplot[fill=chart1] coordinates {
+    (Balanceamento de Linha,85)
+    (Utilização,90)
+    (Taxa de Qualidade,98)
+    (OEE,82)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Métricas de Eficiência do Processo}
+\label{fig:process-efficiency}
+\end{figure}
+
+\section{Design do Layout}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{layout.pdf}  % 80% da largura
+    \caption{Layout da Instalação (Versão Reduzida)}
+    \label{fig:factory-layout-small}
+\end{figure}
+
+% Gráfico de Pizza de Alocação de Área
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\pie[radius=4]{
+    25/Produção,
+    20/Armazenamento,
+    15/Montagem,
+    15/Testes,
+    15/Embalagem,
+    10/CQ
+}
+\end{tikzpicture}
+\caption{Alocação de Área da Instalação}
+\label{fig:area-allocation}
+\end{figure}
+
+
+\chapter{Documentação do Processo}
+
+\section{Análise da Rota de Manufatura}
+
+\subsection{Análise do Tempo de Processo}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Análise de Duração das Etapas do Processo},
+    ylabel={Tempo (segundos)},
+    xlabel={Etapas do Processo},
+    symbolic x coords={Prep. Material,Moldagem,Montagem,Integração,Testes,Esterilização,Embalagem},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    width=\textwidth,
+    height=8cm,
+    ybar,
+    bar width=20pt,
+    x tick label style={rotate=45,anchor=east}
+]
+\addplot[fill=chart1] coordinates {
+    (Prep. Material,300)
+    (Moldagem,180)
+    (Montagem,240)
+    (Integração,300)
+    (Testes,360)
+    (Esterilização,1800)
+    (Embalagem,120)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Duração das Etapas do Processo}
+\label{fig:process-duration}
+\end{figure}
+
+\subsection{Alocação de Recursos}
+\begin{table}[H]
+\centering
+\caption{Requisitos de Recursos do Processo}
+\label{tab:resource-req}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Etapa do Processo & Operadores & Equipamentos & Verificações de Qualidade & Tempo de Setup (min) \\
+\midrule
+Preparação de Material & 2 & 2 & 2 & 15 \\
+Moldagem por Injeção & 1 & 3 & 3 & 30 \\
+Montagem de Componentes & 3 & 4 & 4 & 20 \\
+Integração Eletrônica & 2 & 2 & 5 & 25 \\
+Testes & 2 & 6 & 6 & 15 \\
+Esterilização & 1 & 1 & 2 & 45 \\
+Embalagem & 2 & 2 & 3 & 20 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Análise de Rede}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance = 2cm and 3cm,
+    event/.style={circle, draw, thick, minimum size=1.2cm},
+    critical/.style={circle, draw, thick, fill=red!20, minimum size=1.2cm},
+    activity/.style={->, >=stealth, thick}
+]
+% Eventos (nós)
+\node[event] (1) {1};
+\node[critical, right=of 1] (2) {2};
+\node[event, above right=of 2] (3) {3};
+\node[critical, right=of 2] (4) {4};
+\node[event, below right=of 2] (5) {5};
+\node[critical, right=of 4] (6) {6};
+
+% Atividades (setas)
+\draw[activity] (1) -- node[above] {Prep. Material (5)} (2);
+\draw[activity] (2) -- node[above] {Moldagem (3)} (3);
+\draw[activity] (2) -- node[above] {Montagem (4)} (4);
+\draw[activity] (2) -- node[below] {Testes (6)} (5);
+\draw[activity] (3) -- node[above right] {Integração (5)} (4);
+\draw[activity] (4) -- node[above] {Embalagem (2)} (6);
+\draw[activity] (5) -- node[below right] {CQ (3)} (6);
+
+\end{tikzpicture}
+\caption{Diagrama de Rede do Processo com Caminho Crítico}
+\label{fig:network-diagram}
+\end{figure}
+
+\section{Pontos de Controle do Processo}
+
+\subsection{Parâmetros de Controle de Qualidade}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Distribuição de Pontos de Controle de Qualidade},
+    ylabel={Número de Verificações},
+    xlabel={Estágio de Produção},
+    symbolic x coords={Matérias-Primas,Componentes,Montagem,Eletrônica,Produto Final},
+    xtick=data,
+    nodes near coords,
+    nodes near coords align={vertical},
+    width=\textwidth,
+    height=8cm,
+    ybar,
+    bar width=25pt,
+    x tick label style={rotate=45,anchor=east}
+]
+\addplot[fill=chart2] coordinates {
+    (Matérias-Primas,3)
+    (Componentes,4)
+    (Montagem,5)
+    (Eletrônica,6)
+    (Produto Final,4)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Distribuição do Controle de Qualidade}
+\label{fig:qc-distribution}
+\end{figure}
+
+\subsection{Parâmetros Críticos de Controle}
+\begin{table}[H]
+\centering
+\caption{Parâmetros Críticos do Processo}
+\label{tab:critical-parameters}
+\begin{tabular}{@{}llcc@{}}
+\toprule
+Parâmetro & Especificação & Tolerância & Frequência de Medição \\
+\midrule
+Pressão de Injeção & 800 PSI & ±20 PSI & Cada ciclo \\
+Temperatura do Molde & 180°C & ±5°C & Contínua \\
+Torque de Montagem & 2,5 Nm & ±0,1 Nm & 100\% inspeção \\
+Taxa de Fluxo & 0,1 mL/hr & ±0,005 mL/hr & Cada unidade \\
+Desempenho da Bateria & 168 hrs & +2/-0 hrs & Cada unidade \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Controle Detalhado do Processo}
+
+\subsection{Gráficos de Controle}
+% Gráficos X-bar e R para parâmetros críticos
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Gráfico X-bar: Pressão de Injeção},
+    ylabel={Pressão (PSI)},
+    xlabel={Número da Amostra},
+    width=\textwidth,
+    height=6cm,
+    grid=major,
+    legend pos=north west
+]
+\addplot[blue, thick] coordinates {
+    (1,802) (2,798) (3,805) (4,799) (5,801)
+    (6,797) (7,803) (8,800) (9,802) (10,799)
+};
+\addplot[red, dashed] coordinates {(0,820) (10,820)}; % LSC
+\addplot[red, dashed] coordinates {(0,780) (10,780)}; % LIC
+\addplot[green!50!black] coordinates {(0,800) (10,800)}; % Linha central
+\legend{Medições,Limites de Controle,Meta}
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{axis}[
+    title={Gráfico R: Amplitude da Pressão de Injeção},
+    ylabel={Amplitude (PSI)},
+    xlabel={Número da Amostra},
+    width=\textwidth,
+    height=6cm,
+    grid=major,
+    legend pos=north west
+]
+\addplot[blue, thick] coordinates {
+    (1,5) (2,7) (3,4) (4,6) (5,5)
+    (6,8) (7,4) (8,6) (9,5) (10,7)
+};
+\addplot[red, dashed] coordinates {(0,15) (10,15)}; % LSC
+\addplot[red, dashed] coordinates {(0,0) (10,0)}; % LIC
+\legend{Amplitude,Limites de Controle}
+\end{axis}
+\end{tikzpicture}
+\caption{Gráficos de Controle para Pressão de Injeção}
+\label{fig:control-charts}
+\end{figure}
+
+\section{Análise da Capacidade do Processo}
+
+\subsection{Análise de Estabilidade do Processo}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Gráfico de Amplitude Móvel - Torque de Montagem},
+    ylabel={Amplitude Móvel (Nm)},
+    xlabel={Número da Amostra},
+    width=\textwidth,
+    height=6cm,
+    grid=major,
+    legend pos=north west
+]
+\addplot[blue, thick] coordinates {
+    (1,0.05) (2,0.07) (3,0.04) (4,0.06) (5,0.05)
+    (6,0.08) (7,0.04) (8,0.06) (9,0.05) (10,0.07)
+    (11,0.06) (12,0.05) (13,0.07) (14,0.04) (15,0.06)
+};
+\addplot[red, dashed] coordinates {(0,0.15) (15,0.15)}; % LSC
+\addplot[green!50!black] coordinates {(0,0.06) (15,0.06)}; % Linha Central
+\legend{Amplitude Móvel,LSC,Média}
+\end{axis}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+\begin{axis}[
+    title={Gráfico CUSUM - Torque de Montagem},
+    ylabel={Soma Cumulativa},
+    xlabel={Número da Amostra},
+    width=\textwidth,
+    height=6cm,
+    grid=major,
+    legend pos=north west
+]
+\addplot[blue, thick] coordinates {
+    (1,0.02) (2,0.05) (3,0.03) (4,0.06) (5,0.04)
+    (6,0.07) (7,0.05) (8,0.04) (9,0.06) (10,0.03)
+    (11,0.05) (12,0.04) (13,0.06) (14,0.03) (15,0.05)
+};
+\addplot[red, dashed] coordinates {(0,0.1) (15,0.1)}; % Limite superior de decisão
+\addplot[red, dashed] coordinates {(0,-0.1) (15,-0.1)}; % Limite inferior de decisão
+\legend{CUSUM,Limites de Decisão}
+\end{axis}
+\end{tikzpicture}
+\caption{Gráficos de Controle Estatístico do Processo}
+\label{fig:spc-charts}
+\end{figure}
+
+\subsection{Capacidade do Processo - Análise Detalhada}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Análise de Capacidade do Processo - Taxa de Fluxo},
+    xlabel={Taxa de Fluxo (mL/hr)},
+    ylabel={Frequência},
+    width=\textwidth,
+    height=8cm,
+    grid=major,
+    legend pos=north west
+]
+% Curva de distribuição normal
+\addplot[smooth, thick, domain=0.09:0.11] {1000*exp(-(x-0.1)^2/0.0001)};
+% Limites de especificação
+\addplot[red, dashed] coordinates {(0.095,0) (0.095,1000)};
+\addplot[red, dashed] coordinates {(0.105,0) (0.105,1000)};
+% Linha alvo
+\addplot[green!50!black] coordinates {(0.1,0) (0.1,1000)};
+\legend{Distribuição,Limites de Especificação,Meta}
+
+% Adicionar valores de Cp e Cpk
+\node[anchor=north west] at (axis cs:0.091,900) 
+    {$C_p = 1,67$\\$C_{pk} = 1,65$};
+\end{axis}
+\end{tikzpicture}
+\caption{Análise de Capacidade do Processo}
+\label{fig:process-capability}
+\end{figure}
+
+\subsection{Métricas de Desempenho do Processo}
+\begin{table}[H]
+\centering
+\caption{Resumo do Desempenho do Processo}
+\label{tab:process-performance}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Parâmetro & Cp & Cpk & Pp & Ppk \\
+\midrule
+Pressão de Injeção & 1,67 & 1,65 & 1,63 & 1,60 \\
+Torque de Montagem & 1,55 & 1,52 & 1,50 & 1,48 \\
+Taxa de Fluxo & 1,70 & 1,68 & 1,65 & 1,62 \\
+Desempenho da Bateria & 1,45 & 1,42 & 1,40 & 1,38 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Análise de Tendências do Processo}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar=5pt,
+    title={Tendências de Capacidade por Linha de Produto},
+    ylabel={Índice de Capacidade},
+    symbolic x coords={X1,X1 Pro,Mini},
+    xtick=data,
+    nodes near coords,
+    width=\textwidth,
+    height=8cm,
+    legend entries={Cp,Cpk},
+    legend pos=north west,
+    bar width=15pt
+]
+\addplot[fill=chart1] coordinates {
+    (X1,1.67)
+    (X1 Pro,1.72)
+    (Mini,1.65)
+};
+\addplot[fill=chart2] coordinates {
+    (X1,1.65)
+    (X1 Pro,1.70)
+    (Mini,1.62)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Índices de Capacidade por Produto}
+\label{fig:capability-indices}
+\end{figure}
+
+\subsection{Distribuição de Performance}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    scatter/classes={
+        a={mark=o,draw=black,fill=chart1},
+        b={mark=square,draw=black,fill=chart2},
+        c={mark=triangle,draw=black,fill=chart3}
+    },
+    title={Distribuição de Desempenho do Processo},
+    xlabel={Amostras},
+    ylabel={Valor Medido},
+    width=\textwidth,
+    height=8cm,
+    grid=major,
+    legend entries={X1,X1 Pro,Mini}
+]
+\addplot[scatter,only marks,scatter src=explicit symbolic]
+coordinates {
+    (1,98) [a] (2,99) [a] (3,97) [a] (4,98.5) [a] (5,99) [a]
+    (1,99) [b] (2,98.5) [b] (3,99.5) [b] (4,98) [b] (5,99) [b]
+    (1,97) [c] (2,98) [c] (3,97.5) [c] (4,98) [c] (5,97.5) [c]
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Distribuição de Desempenho do Processo}
+\label{fig:performance-dist}
+\end{figure}
+
+\section{Cronograma de Produção}
+% Gráfico de Gantt para cronograma de produção
+\begin{figure}[H]
+\centering
+\begin{ganttchart}[
+    vgrid,
+    hgrid,
+    bar/.style={fill=chart1},
+    bar height=.6,
+    group right shift=0,
+    group height=.3,
+    group top shift=.6,
+    today=10
+    ]{1}{30}
+    \gantttitle{Cronograma de Produção (Dias)}{30} \\
+    \gantttitlelist{1,...,30}{1} \\
+    \ganttgroup{Lote A}{1}{10} \\
+    \ganttbar{Preparação de Material}{1}{2} \\
+    \ganttbar{Moldagem}{3}{5} \\
+    \ganttbar{Montagem}{6}{8} \\
+    \ganttbar{Testes}{9}{10} \\
+    \ganttgroup{Lote B}{11}{20} \\
+    \ganttbar{Preparação de Material}{11}{12} \\
+    \ganttbar{Moldagem}{13}{15} \\
+    \ganttbar{Montagem}{16}{18} \\
+    \ganttbar{Testes}{19}{20} \\
+    \ganttgroup{Lote C}{21}{30} \\
+    \ganttbar{Preparação de Material}{21}{22} \\
+    \ganttbar{Moldagem}{23}{25} \\
+    \ganttbar{Montagem}{26}{28} \\
+    \ganttbar{Testes}{29}{30}
+\end{ganttchart}
+\caption{Gráfico de Gantt do Cronograma de Produção}
+\label{fig:gantt-chart}
+\end{figure}
+
+\section{Análise de Controle Estatístico do Processo}
+\subsection{Análise de Estabilidade do Processo}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    title={Gráfico de Amplitude Móvel - Torque de Montagem},
+    ylabel={Amplitude Móvel (Nm)},
+    xlabel={Número da Amostra},
+    width=\textwidth,
+    height=6cm,
+    grid=major,
+    legend pos=north west
+]
+\addplot[blue, thick] coordinates {
+    (1,0.05) (2,0.07) (3,0.04) (4,0.06) (5,0.05)
+    (6,0.08) (7,0.04) (8,0.06) (9,0.05) (10,0.07)
+    (11,0.06) (12,0.05) (13,0.07) (14,0.04) (15,0.06)
+};
+\addplot[red, dashed] coordinates {(0,0.15) (15,0.15)}; % LSC
+\addplot[green!50!black] coordinates {(0,0.06) (15,0.06)}; % Linha central
+\legend{Amplitude Móvel,LSC,Média}
+\end{axis}
+\end{tikzpicture}
+\begin{tikzpicture}
+\begin{axis}[
+    title={Gráfico CUSUM - Torque de Montagem},
+    ylabel={Soma Cumulativa},
+    xlabel={Número da Amostra},
+    width=\textwidth,
+    height=6cm,
+    grid=major,
+    legend pos=north west
+]
+\addplot[blue, thick] coordinates {
+    (1,0.02) (2,0.05) (3,0.03) (4,0.06) (5,0.04)
+    (6,0.07) (7,0.05) (8,0.04) (9,0.06) (10,0.03)
+    (11,0.05) (12,0.04) (13,0.06) (14,0.03) (15,0.05)
+};
+\addplot[red, dashed] coordinates {(0,0.1) (15,0.1)}; % Limite superior de decisão
+\addplot[red, dashed] coordinates {(0,-0.1) (15,-0.1)}; % Limite inferior de decisão
+\legend{CUSUM,Limites de Decisão}
+\end{axis}
+\end{tikzpicture}
+\caption{Gráficos de Controle Estatístico do Processo}
+\label{fig:spc-charts}
+\end{figure}
+
+\subsection{Métricas de Desempenho do Processo}
+\begin{table}[H]
+\centering
+\caption{Resumo do Desempenho do Processo}
+\label{tab:process-performance}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Parâmetro & Cp & Cpk & Pp & Ppk \\
+\midrule
+Pressão de Injeção & 1.67 & 1.65 & 1.63 & 1.60 \\
+Torque de Montagem & 1.55 & 1.52 & 1.50 & 1.48 \\
+Taxa de Fluxo & 1.70 & 1.68 & 1.65 & 1.62 \\
+Desempenho da Bateria & 1.45 & 1.42 & 1.40 & 1.38 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\chapter{Análise dos dados}
+
+\section{Análise de Controle de Qualidade}
+\subsection{Parâmetros Críticos de Qualidade}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    ybar,
+    title={Gráfico de Pareto de Defeitos de Qualidade},
+    ylabel={Número de Ocorrências},
+    ylabel near ticks,
+    symbolic x coords={
+        Montagem,
+        Moldagem,
+        Eletrônica,
+        Calibração,
+        Embalagem,
+        Outros
+    },
+    xtick=data,
+    nodes near coords,
+    x tick label style={rotate=45,anchor=east},
+    width=\textwidth,
+    height=8cm,
+    bar width=25pt
+]
+\addplot[fill=chart1] coordinates {
+    (Montagem,45)
+    (Moldagem,38)
+    (Eletrônica,25)
+    (Calibração,18)
+    (Embalagem,12)
+    (Outros,8)
+};
+\end{axis}
+% Adicionar linha de porcentagem cumulativa
+\begin{axis}[
+    axis y line*=right,
+    ylabel={Porcentagem Cumulativa},
+    ylabel near ticks,
+    width=\textwidth,
+    height=8cm,
+    symbolic x coords={
+        Montagem,
+        Moldagem,
+        Eletrônica,
+        Calibração,
+        Embalagem,
+        Outros
+    },
+    xtick=data,
+    x tick label style={rotate=45,anchor=east}
+]
+\addplot[smooth,red,thick,mark=*] coordinates {
+    (Montagem,30.8)
+    (Moldagem,56.8)
+    (Eletrônica,74.0)
+    (Calibração,86.3)
+    (Embalagem,94.5)
+    (Outros,100)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Análise de Pareto dos Defeitos de Qualidade}
+\label{fig:quality-pareto}
+\end{figure}
+\subsection{Limites de Controle do Processo}
+\begin{table}[H]
+\centering
+\caption{Limites de Controle Estabelecidos por Processo}
+\label{tab:control-limits}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Parâmetro do Processo & Alvo & LIE & LSE & Crítico para Qualidade \\
+\midrule
+Pressão de Injeção (PSI) & 800 & 780 & 820 & Sim \\
+Torque de Montagem (Nm) & 2.5 & 2.4 & 2.6 & Sim \\
+Taxa de Fluxo (mL/hr) & 0.1 & 0.095 & 0.105 & Sim \\
+Vida da Bateria (hrs) & 168 & 168 & 170 & Sim \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Análise de Capacidade do Processo}
+\subsection{Índices de Capacidade por Linha de Produto}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   ybar,
+   title={Comparação de Capacidade do Processo},
+   ylabel={Índice de Capacidade},
+   symbolic x coords={X1,X1 Pro,Mini},
+   xtick=data,
+   nodes near coords,
+   width=\textwidth,
+   height=8cm,
+   legend entries={Cp,Cpk},
+   legend pos=north west,
+   bar width=15pt
+]
+\addplot[fill=chart1] coordinates {
+   (X1,1.67)
+   (X1 Pro,1.72)
+   (Mini,1.65)
+};
+\addplot[fill=chart2] coordinates {
+   (X1,1.65)
+   (X1 Pro,1.70)
+   (Mini,1.62)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Índices de Capacidade por Produto}
+\label{fig:capability-indices}
+\end{figure}
+\subsection{Análise de Desempenho do Processo}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   scatter/classes={
+       a={mark=o,draw=black,fill=chart1},
+       b={mark=square,draw=black,fill=chart2},
+       c={mark=triangle,draw=black,fill=chart3}
+   },
+   title={Distribuição de Desempenho do Processo},
+   xlabel={Amostras},
+   ylabel={Valor Medido},
+   width=\textwidth,
+   height=8cm,
+   grid=major,
+   legend entries={X1,X1 Pro,Mini}
+]
+\addplot[scatter,only marks,scatter src=explicit symbolic]
+coordinates {
+   (1,98) [a] (2,99) [a] (3,97) [a] (4,98.5) [a] (5,99) [a]
+   (1,99) [b] (2,98.5) [b] (3,99.5) [b] (4,98) [b] (5,99) [b]
+   (1,97) [c] (2,98) [c] (3,97.5) [c] (4,98) [c] (5,97.5) [c]
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Distribuição de Desempenho do Processo}
+\label{fig:performance-dist}
+\end{figure}
+
+\section{Análise Estatística}
+\subsection{Análise de Correlação}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   title={Matriz de Correlação de Parâmetros},
+   xlabel={Parâmetros do Processo},
+   ylabel={Métricas de Qualidade},
+   width=\textwidth,
+   height=8cm,
+   enlargelimits=0.15,
+   colorbar,
+   colormap={correlation}{
+       color(0)=(white)
+       color(1)=(chart1)
+   }
+]
+\addplot[matrix plot*,point meta=explicit] table[meta=c] {
+   x y c
+   0 0 1.00
+   0 1 0.85
+   0 2 0.65
+   0 3 0.45
+   1 0 0.85
+   1 1 1.00
+   1 2 0.75
+   1 3 0.55
+   2 0 0.65
+   2 1 0.75
+   2 2 1.00
+   2 3 0.70
+   3 0 0.45
+   3 1 0.55
+   3 2 0.70
+   3 3 1.00
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Análise de Correlação de Parâmetros}
+\label{fig:correlation-matrix}
+\end{figure}
+
+\section{Recomendações de Melhoria do Processo}
+\begin{table}[H]
+\centering
+\caption{Oportunidades de Melhoria do Processo}
+\label{tab:improvements}
+\begin{tabular}{@{}llc@{}}
+\toprule
+Área do Processo & Ação de Melhoria & Impacto Esperado (\%) \\
+\midrule
+Montagem & Controle automatizado de torque & 15 \\
+Moldagem & Otimização de temperatura & 12 \\
+Testes & Calibração aprimorada & 8 \\
+Embalagem & Inspeção automatizada & 5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\subsection{Análise de Custo-Benefício}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   ybar,
+   title={Análise de Investimento vs. Retorno},
+   ylabel={Custo/Benefício (k\$)},
+   symbolic x coords={Montagem,Moldagem,Testes,Embalagem},
+   xtick=data,
+   nodes near coords,
+   x tick label style={rotate=45,anchor=east},
+   width=\textwidth,
+   height=8cm,
+   legend entries={Investimento,Retorno Anual},
+   legend pos=north west,
+   bar width=15pt
+]
+\addplot[fill=chart1] coordinates {
+   (Montagem,150)
+   (Moldagem,120)
+   (Testes,80)
+   (Embalagem,50)
+};
+\addplot[fill=chart2] coordinates {
+   (Montagem,225)
+   (Moldagem,168)
+   (Testes,104)
+   (Embalagem,60)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Análise de Investimento e Retorno}
+\label{fig:cost-benefit}
+\end{figure}
+
+
+\chapter{Melhorias do processo}
+
+\section{Proposta de Automação}
+\subsection{Comparação do Processo Atual vs. Proposto}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   ybar=5pt,
+   title={Comparação de Tempo do Processo: Manual vs. Automatizado},
+   ylabel={Tempo (minutos)},
+   symbolic x coords={Prep. Material,Montagem,Testes,Embalagem},
+   xtick=data,
+   nodes near coords,
+   x tick label style={rotate=45,anchor=east},
+   width=\textwidth,
+   height=8cm,
+   legend entries={Processo Atual,Processo Automatizado},
+   legend pos=north west,
+   bar width=15pt
+]
+\addplot[fill=chart1] coordinates {
+   (Prep. Material,30)
+   (Montagem,45)
+   (Testes,35)
+   (Embalagem,25)
+};
+\addplot[fill=chart2] coordinates {
+   (Prep. Material,15)
+   (Montagem,20)
+   (Testes,15)
+   (Embalagem,10)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Comparação de Tempo do Processo}
+\label{fig:time-comparison}
+\end{figure}
+\subsection{Análise de Investimento em Automação}
+\begin{table}[H]
+\centering
+\caption{Detalhes do Investimento em Automação}
+\label{tab:automation-investment}
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Área do Processo & Equipamento & Investimento (k\$) & ROI (\%) \\
+\midrule
+Manuseio de Material & Sistema Robótico & 250 & 45 \\
+Montagem & Linha Automatizada & 450 & 65 \\
+Testes & Sistema de Visão & 180 & 55 \\
+Embalagem & Esteira Inteligente & 120 & 40 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Estratégia de Implementação}
+\subsection{Cronograma de Implementação}
+\begin{figure}[H]
+\centering
+\begin{ganttchart}[
+   vgrid,
+   hgrid,
+   bar/.style={fill=chart1},
+   bar height=.6,
+   group right shift=0,
+   group height=.3,
+   group top shift=.6
+   ]{1}{24}
+   \gantttitle{Cronograma de Implementação (Meses)}{24} \\
+   \gantttitlelist{1,...,24}{1} \\
+   \ganttgroup{Fase 1: Manuseio de Material}{1}{8} \\
+   \ganttbar{Instalação de Equipamentos}{1}{3} \\
+   \ganttbar{Testes \& Validação}{4}{6} \\
+   \ganttbar{Treinamento da Equipe}{6}{8} \\
+   \ganttgroup{Fase 2: Montagem}{7}{16} \\
+   \ganttbar{Configuração da Linha}{7}{10} \\
+   \ganttbar{Integração}{11}{13} \\
+   \ganttbar{Otimização}{14}{16} \\
+   \ganttgroup{Fase 3: Testes \& Embalagem}{15}{24} \\
+   \ganttbar{Instalação do Sistema de Visão}{15}{18} \\
+   \ganttbar{Configuração da Esteira}{19}{21} \\
+   \ganttbar{Integração Final}{22}{24}
+\end{ganttchart}
+\caption{Cronograma de Implementação}
+\label{fig:implementation-timeline}
+\end{figure}
+\subsection{Análise de Riscos}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   scatter/classes={
+       high={mark=*,draw=red,fill=red},
+       medium={mark=square*,draw=orange,fill=orange},
+       low={mark=triangle*,draw=green,fill=green}
+   },
+   title={Matriz de Avaliação de Riscos},
+   xlabel={Impacto},
+   ylabel={Probabilidade},
+   width=\textwidth,
+   height=8cm,
+   grid=major,
+   xtick={1,2,3,4,5},
+   ytick={1,2,3,4,5},
+   legend entries={Risco Alto,Risco Médio,Risco Baixo}
+]
+% Plotar pontos de risco
+\addplot[scatter,only marks,scatter src=explicit symbolic]
+coordinates {
+   (4,4) [high]    % Interrupção da Produção
+   (4,3) [high]    % Problemas de Integração
+   (3,3) [medium]  % Treinamento da Equipe
+   (3,2) [medium]  % Atrasos de Equipamentos
+   (2,2) [low]     % Estouro de Custo
+   (2,1) [low]     % Documentação
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Matriz de Avaliação de Riscos}
+\label{fig:risk-matrix}
+\end{figure}
+
+\section{Benefícios Esperados}
+\subsection{Melhorias de Produtividade}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   title={Aumento Projetado de Produtividade},
+   xlabel={Meses Após Implementação},
+   ylabel={Produtividade (\%)},
+   width=\textwidth,
+   height=8cm,
+   grid=major,
+   legend pos=south east
+]
+\addplot[smooth,thick,chart1] coordinates {
+   (0,100)
+   (3,110)
+   (6,125)
+   (12,140)
+   (18,150)
+   (24,160)
+};
+\addplot[dashed,thick,chart2] coordinates {
+   (0,100)
+   (24,100)
+};
+\legend{Processo Automatizado,Processo Atual}
+\end{axis}
+\end{tikzpicture}
+\caption{Projeção de Produtividade}
+\label{fig:productivity-projection}
+\end{figure}
+\subsection{Melhorias de Qualidade}
+\begin{table}[H]
+\centering
+\caption{Melhorias de Qualidade Esperadas}
+\label{tab:quality-improvements}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Métrica de Qualidade & Atual & Esperado \\
+\midrule
+Rendimento de Primeira Passagem (\%) & 95.5 & 98.5 \\
+Taxa de Defeitos (PPM) & 2500 & 500 \\
+Taxa de Refugo (\%) & 3.2 & 1.1 \\
+Devoluções de Clientes (\%) & 0.5 & 0.1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Análise de Custos}
+\subsection{Retorno sobre Investimento}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   title={Projeção de ROI Cumulativo},
+   xlabel={Ano},
+   ylabel={Retorno (\%)},
+   width=\textwidth,
+   height=8cm,
+   grid=major,
+   legend pos=north west
+]
+\addplot[smooth,thick,chart1] coordinates {
+   (0,0)
+   (1,15)
+   (2,45)
+   (3,85)
+   (4,135)
+   (5,195)
+};
+\addplot[dashed,red] coordinates {
+   (0,0)
+   (5,100)
+};
+\legend{Retorno Projetado,Ponto de Equilíbrio}
+\end{axis}
+\end{tikzpicture}
+\caption{Projeção de ROI}
+\label{fig:roi-projection}
+\end{figure}
+\subsection{Redução de Custos Operacionais}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   ybar,
+   title={Redução Anual de Custos Operacionais},
+   ylabel={Redução de Custos (\%)},
+   symbolic x coords={Mão de Obra,Manutenção,Qualidade,Energia,Materiais},
+   xtick=data,
+   nodes near coords,
+   x tick label style={rotate=45,anchor=east},
+   width=\textwidth,
+   height=8cm,
+   bar width=25pt
+]
+\addplot[fill=chart1] coordinates {
+   (Mão de Obra,45)
+   (Manutenção,25)
+   (Qualidade,35)
+   (Energia,15)
+   (Materiais,20)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Redução de Custos Operacionais por Categoria}
+\label{fig:cost-reduction}
+\end{figure}
+
+\chapter{Conclusão e recomendações}
+
+\section{Resumo do Projeto}
+\subsection{Principais Conquistas}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+   ybar,
+   title={Alcance dos Objetivos do Projeto},
+   ylabel={Taxa de Alcance (\%)},
+   symbolic x coords={Qualidade,Produtividade,Automação,Redução de Custos},
+   xtick=data,
+   nodes near coords,
+   x tick label style={rotate=45,anchor=east},
+   width=\textwidth,
+   height=8cm,
+   bar width=25pt
+]
+\addplot[fill=chart1] coordinates {
+   (Qualidade,98)
+   (Produtividade,95)
+   (Automação,92)
+   (Redução de Custos,88)
+};
+\end{axis}
+\end{tikzpicture}
+\caption{Alcance dos Objetivos do Projeto}
+\label{fig:objectives-achievement}
+\end{figure}
+\subsection{Impacto Financeiro}
+\begin{table}[H]
+\centering
+\caption{Resumo do Impacto Financeiro}
+\label{tab:financial-summary}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Métrica & Meta & Alcançado \\
+\midrule
+Retorno do Investimento (\%) & 150 & 165 \\
+Redução de Custos (\%) & 25 & 28 \\
+Aumento de Produtividade (\%) & 40 & 45 \\
+Melhoria da Qualidade (\%) & 3 & 3.5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Recomendações Finais}
+\begin{enumerate}
+   \item Continuar o investimento em automação e transformação digital
+   \item Aprimorar programas de treinamento e desenvolvimento dos funcionários
+   \item Fortalecer relacionamentos com fornecedores e programas de qualidade
+   \item Implementar análise avançada e manutenção preditiva
+   \item Desenvolver sistema abrangente de documentação
+\end{enumerate}
+% Tabela final de resumo
+\begin{table}[H]
+\centering
+\caption{Métricas de Sucesso do Projeto}
+\label{tab:success-metrics}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Métrica de Sucesso & Meta & Alcançado \\
+\midrule
+Conclusão do Projeto & 100\% & 98\% \\
+Aderência ao Orçamento & ±5\% & +3\% \\
+Conformidade com Cronograma & 100\% & 95\% \\
+Objetivos de Qualidade & 100\% & 98\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\end{document}
